@@ -61,10 +61,12 @@ func PxConnectAsPlugin() (context.Context, *grpc.ClientConn, error) {
 		dialOptions []grpc.DialOption
 	)
 
-	// Start global tunnel if not up already
-	err := kubernetes.StartTunnel()
-	if err != nil {
-		return nil, nil, err
+	if len(config.CM().GetEndpoint()) == 0 {
+		// Start global tunnel if not up already
+		err := kubernetes.StartTunnel()
+		if err != nil {
+			return nil, nil, err
+		}
 	}
 
 	// If secure: true set in config.yaml file, use TLS
@@ -75,6 +77,7 @@ func PxConnectAsPlugin() (context.Context, *grpc.ClientConn, error) {
 	authInfo := config.CM().GetCurrentAuthInfo()
 
 	// Connect to server
+	logrus.Infof("Connecting to Portworx at endpoint %s", endpoint)
 	conn, err := pxgrpc.Connect(endpoint, dialOptions)
 	if err != nil {
 		return nil, nil, err
@@ -95,7 +98,7 @@ func PxConnectAsPlugin() (context.Context, *grpc.ClientConn, error) {
 		ctx = pxgrpc.AddMetadataToContext(ctx, "authorization", "bearer "+token)
 	}
 
-	logrus.Infof("Connected through API server to %s\n", endpoint)
+	logrus.Infof("Connected to %s\n", endpoint)
 	return ctx, conn, nil
 }
 

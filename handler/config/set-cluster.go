@@ -16,26 +16,23 @@ limitations under the License.
 package configcli
 
 import (
+	"fmt"
+	"io/ioutil"
+
 	"github.com/portworx/pxc/pkg/commander"
 	"github.com/portworx/pxc/pkg/config"
 	"github.com/portworx/pxc/pkg/util"
 	"github.com/spf13/cobra"
 )
 
-type setClusterFlagsTypes struct {
-	TunnelServiceNamespace string
-	TunnelServiceName      string
-	TunnelServicePort      string
-}
-
 // setClusterCmd represents the config command
 var (
-	setClusterCmd   *cobra.Command
-	setClusterFlags *setClusterFlagsTypes
+	setClusterCmd *cobra.Command
+	setCluster    *config.Cluster
 )
 
 var _ = commander.RegisterCommandVar(func() {
-	setClusterFlags = &setClusterFlagsTypes{}
+	setCluster = config.NewCluster()
 	setClusterCmd = &cobra.Command{
 		Use:   "set-cluster",
 		Short: "Setup pxc cluster configuration",
@@ -46,12 +43,20 @@ var _ = commander.RegisterCommandVar(func() {
 var _ = commander.RegisterCommandInit(func() {
 	ConfigAddCommand(setClusterCmd)
 
-	setClusterCmd.Flags().StringVar(&setClusterFlags.TunnelServiceNamespace,
+	setClusterCmd.Flags().StringVar(&setCluster.TunnelServiceNamespace,
 		"portworx-service-namespace", "kube-system", "Kubernetes namespace for the Portworx service")
-	setClusterCmd.Flags().StringVar(&setClusterFlags.TunnelServiceName,
+	setClusterCmd.Flags().StringVar(&setCluster.TunnelServiceName,
 		"portworx-service-name", "portworx-api", "Kubernetes name for the Portworx service")
-	setClusterCmd.Flags().StringVar(&setClusterFlags.TunnelServicePort,
+	setClusterCmd.Flags().StringVar(&setCluster.TunnelServicePort,
 		"portworx-service-port", "9020", "Port for the Portworx SDK endpoint in the Kubernetes service")
+	setClusterCmd.Flags().BoolVar(&setCluster.Secure,
+		"tls", false, "Enable if using TLS. Passing a CA will enable this automatically.")
+	setClusterCmd.Flags().StringVar(&setCluster.CACert,
+		"cafile", "", "Path to CA certificate")
+	setClusterCmd.Flags().StringVar(&setCluster.Endpoint,
+		"endpoint", "", "Direct connection to a Portworx node gRPC endpoint. "+
+			"This endpoint would be used instead of the Kubernetes Portworx API service. "+
+			"Example: 1.1.1.1:9020")
 })
 
 func setClusterExec(cmd *cobra.Command, args []string) error {
@@ -69,21 +74,41 @@ func setClusterExec(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// Get the current context object
 	currentContext := kconfig.Contexts[currentContextName]
 
 	// Initialize cluster object
-	clusterInfo := config.NewCluster()
-	clusterInfo.Name = currentContext.Cluster
-	clusterInfo.TunnelServiceName = setClusterFlags.TunnelServiceName
-	clusterInfo.TunnelServiceNamespace = setClusterFlags.TunnelServiceNamespace
-	clusterInfo.TunnelServicePort = setClusterFlags.TunnelServicePort
+	setCluster.Name = currentContext.Cluster
+
+	// Validate the value of endpoint if provided
+	if len(setCluster.Endpoint) != 0 {
+		var err error
+		setCluster.Endpoint, err = util.ValidateEndpoint(setCluster.Endpoint)
+		if err != nil {
+			return fmt.Errorf("Invalid endpoint: %s", setCluster.Endpoint)
+		}
+	}
+
+	// Check if CA was provided
+	if len(setCluster.CACert) != 0 {
+		var err error
+		if !util.IsFileExists(setCluster.CACert) {
+			return fmt.Errorf("CA file: %s does not exists", setCluster.CACert)
+		}
+		setCluster.CACertData, err = ioutil.ReadFile(setCluster.CACert)
+		if err != nil {
+			return fmt.Errorf("Unable to read CA file %s", setCluster.CACert)
+		}
+		// If CA cert is provided, make "secure" default to true
+		setCluster.Secure = true
+	}
 
 	// Get the location of the kubeconfig for this specific object. This is necessary
 	// because KUBECONFIG can have many kubeconfigs, example: KUBECONFIG=kube1.conf:kube2.conf
 	location := kconfig.Clusters[currentContext.Cluster].LocationOfOrigin
 
 	// Storage the information to the appropriate kubeconfig
-	if err := config.SaveClusterInKubeconfig(currentContext.Cluster, location, clusterInfo); err != nil {
+	if err := config.SaveClusterInKubeconfig(currentContext.Cluster, location, setCluster); err != nil {
 		return err
 	}
 
