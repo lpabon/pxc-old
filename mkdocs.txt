@@ -1,0 +1,3 @@
+
+pip3 install --user mkdocs mkdocs-material mkdocs-bootstrap4
+

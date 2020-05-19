@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "width": 100,
+  "height": 23,
+  "duration": 42.148885,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "xterm-256color",
+    "SHELL": "/bin/bash"
+  },
+  "stdout": [
+    [
+      0.163799,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007"
+    ],
+    [
+      0.000119,
+      "\u001b[?1034h"
+    ],
+    [
+      2.6e-05,
+      "$ "
+    ],
+    [
+      2.5,
+      "kubectl get nodes"
+    ],
+    [
+      1.069705,
+      "\r\n"
+    ],
+    [
+      0.150264,
+      "NAME"
+    ],
+    [
+      0.000467,
+      "                  STATUS   ROLES    AGE   VERSION\r\nlpabon-k8s-1-master"
+    ],
+    [
+      6.6e-05,
+      "   Ready    master   11d   v1.17.0\r\nlpabon-k8s-1-node0    Ready    "
+    ],
+    [
+      5.1e-05,
+      "<none>   11d   v1.17.0\r\nlpabon-k8s-1-node1    Ready    <none>   11d   "
+    ],
+    [
+      0.000113,
+      "v1.17.0\r\nlpabon-k8s-1-node2    Ready    <none>   11d   v1.17.0\r\n"
+    ],
+    [
+      0.004785,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007"
+    ],
+    [
+      4e-05,
+      "$ "
+    ],
+    [
+      2.5,
+      "kubectl pxc login --k8s-secret-name=px-admin --k8s-secret-namespace=portworx"
+    ],
+    [
+      0.969777,
+      "\r\n"
+    ],
+    [
+      0.137784,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007$ "
+    ],
+    [
+      2.5,
+      "kubectl pxc cluster describe"
+    ],
+    [
+      0.945868,
+      "\r\n"
+    ],
+    [
+      0.362355,
+      "Cluster ID: px-cluster-43e75a0d-39d5-4904-ae11-b6f00c51f261\r\nCluster UUID: 7205e98c-2931-4f9b-9140-e780216b8171\r\nCluster Status: Ready\r\nVersion: 2.5.0.0-5d86e34\r\n build: 5d86e34a9a4d74ad079c8cf39353b3a40bb7ca26\r\nSDK Version 0.42.25\r\n"
+    ],
+    [
+      0.003685,
+      "\r\n"
+    ],
+    [
+      0.050527,
+      "Hostname            IP               SchedulerNodeName   Used   Capacity  Status  CPU       Mem Total  Mem Free  Containers  Kernel Version              OS\r\n--------            --               -----------------   ----   --------  ------  ---       ---------  --------  ----------  --------------              --\r\nlpabon-k8s-1-node0  192.168.121.211  lpabon-k8s-1-node0  14 Gi  3072 Gi   Ready   5.076142  8.2 GB     4.8 GB    N/A         3.10.0-957.12.2.el7.x86_64  CentOS Linux 7 (Core)\r\nlpabon-k8s-1-node2  192.168.121.59   lpabon-k8s-1-node2  14 Gi  3072 Gi   Ready   6.766917  8.2 GB     4.3 GB    N/A         3.10.0-957.12.2.el7.x86_64  CentOS Linux 7 (Core)\r\nlpabon-k8s-1-node1  192.168.121.142  lpabon-k8s-1-node1  14 Gi  3072 Gi   Ready   9.137056  8.2 GB     4.6 GB    N/A         3.10.0-957.12.2.el7.x86_64  CentOS Linux 7 (Core)\r\n"
+    ],
+    [
+      0.002304,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007$ "
+    ],
+    [
+      2.5,
+      "kubectl get pvc\r\n"
+    ],
+    [
+      0.100636,
+      "NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   "
+    ],
+    [
+      4.3e-05,
+      "STORAGECLASS   AGE\r\npvc-intree-auth   Bound    pvc-860f207d-b1ac-48c3-8bb4-fe21c057d7da   2Gi        RWO            intree-auth    7d20h\r\n"
+    ],
+    [
+      0.004424,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007"
+    ],
+    [
+      6e-05,
+      "$ "
+    ],
+    [
+      2.5,
+      "kubectl pxc pvc list"
+    ],
+    [
+      1.063553,
+      "\r\n"
+    ],
+    [
+      0.380733,
+      "NAME             VOLUME                                    CAPACITY  SHARED  STATE     PODS\r\n----             ------                                    --------  ------  -----     ----\r\npvc-intree-auth  pvc-860f207d-b1ac-48c3-8bb4-fe21c057d7da  2.0 GiB   false   Detached  \r\n\r\n"
+    ],
+    [
+      0.002827,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007$ "
+    ],
+    [
+      1.568403,
+      "kubectl pxc pvc list"
+    ],
+    [
+      0.295422,
+      " "
+    ],
+    [
+      0.544153,
+      "-"
+    ],
+    [
+      0.328007,
+      "o"
+    ],
+    [
+      0.093091,
+      " "
+    ],
+    [
+      0.277351,
+      "w"
+    ],
+    [
+      0.10505,
+      "i"
+    ],
+    [
+      0.071278,
+      "d"
+    ],
+    [
+      0.193871,
+      "e"
+    ],
+    [
+      0.150656,
+      "\r\n"
+    ],
+    [
+      0.38192,
+      "NAME             VOLUME                                    VOLUME ID            HA  CAPACITY  SHARED  STATUS  STATE     SNAP ENABLED  ENCRYPTED  PODS\r\n----             ------                                    ---------            --  --------  ------  ------  -----     ------------  ---------  ----\r\npvc-intree-auth  pvc-860f207d-b1ac-48c3-8bb4-fe21c057d7da  1055634681307861826  1   2.0 GiB   false   UP      Detached  false         false      \r\n\r\n"
+    ],
+    [
+      0.004684,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007$ "
+    ],
+    [
+      2.5,
+      "kubectl pxc pvc describe pvc-intree-auth"
+    ],
+    [
+      2.5,
+      " "
+    ],
+    [
+      0.37515,
+      "|"
+    ],
+    [
+      0.072526,
+      " "
+    ],
+    [
+      0.605781,
+      "l"
+    ],
+    [
+      0.192376,
+      "e"
+    ],
+    [
+      0.053261,
+      "s"
+    ],
+    [
+      0.233845,
+      "s"
+    ],
+    [
+      0.731384,
+      "\r\n"
+    ],
+    [
+      0.001805,
+      "\u001b[?1049h\u001b[?1h\u001b=\r"
+    ],
+    [
+      0.489929,
+      "Volume:         1055634681307861826\r\nName:           pvc-860f207d-b1ac-48c3-8bb4-fe21c057d7da\r\nPvc Name:       pvc-intree-auth\r\nNamespace:      default\r\nSize:           2.0 GiB\r\nFormat:         EXT4\r\nHA:             1\r\nIO Priority:    HIGH\r\nCreation Time:  Apr 9 20:17:41 UTC 2020\r\nShared:         false\r\nStatus:         UP\r\nState:          Detached\r\nLabels:         pvc=pvc-intree-auth\r\n                repl=1\r\n                namespace=default\r\n                openstorage.io/auth-secret-name=px-k8s-user\r\n                openstorage.io/auth-secret-namespace=portworx\r\nStats:\r\n  Reads:             0\r\n  Reads MS:          0\r\n  Bytes Read:        0\r\n  Writes:            0\r\n:\u001b[K"
+    ],
+    [
+      2.5,
+      "\r\u001b[K  Writes MS:         0\r\n:\u001b[K"
+    ],
+    [
+      1.509403,
+      "\r\u001b[K  Bytes Written:     0\r\n:\u001b[K"
+    ],
+    [
+      0.649011,
+      "\r\u001b[K  IOs in progress:   0\r\n:\u001b[K"
+    ],
+    [
+      0.568617,
+      "\r\u001b[K  Bytes used:        600 KiB\r\n:\u001b[K"
+    ],
+    [
+      0.583268,
+      "\r\u001b[KReplication Status:  Detached\r\n:\u001b[K"
+    ],
+    [
+      0.657831,
+      "\r\u001b[KReplica sets on nodes:\r\n:\u001b[K"
+    ],
+    [
+      0.584361,
+      "\r\u001b[K  Set:     0\r\n:\u001b[K"
+    ],
+    [
+      0.582038,
+      "\r\u001b[K    Node:  lpabon-k8s-1-node1 (Pool 0)\r\n:\u001b[K"
+    ],
+    [
+      0.648242,
+      "\r\u001b[KOwnership:\r\n:\u001b[K"
+    ],
+    [
+      0.54566,
+      "\r\u001b[K  Owner:  support@mycompany.com\r\n:\u001b[K"
+    ],
+    [
+      0.584767,
+      "\r\u001b[K\r\n:\u001b[K"
+    ],
+    [
+      0.604398,
+      "\r\u001b[K\u0007\r\u001b[K\u001b[7m(END)\u001b[27m\u001b[K"
+    ],
+    [
+      2.446754,
+      "\r\u001b[K\u001b[?1l\u001b>\u001b[?1049l"
+    ],
+    [
+      0.000352,
+      "\u001b]0;lpabon@PDC4-SM26-N8:~/git/golang/porx/src/github.com/portworx/pxc/docs\u0007$ "
+    ]
+  ]
+}
